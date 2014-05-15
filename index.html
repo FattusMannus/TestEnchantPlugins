@@ -1,0 +1,39 @@
+<html>
+<head>
+
+
+<script src="enchant.js"></script>
+<script src="ScrollableScene.enchant.js"></script>
+<script src="Window.enchant.js"></script>
+<script>
+//sample
+window.onload = function(){
+enchant();
+var game = new Game(320, 320), IMG = 'http://jsdo.it/static/assets/logo/01/jsdoit_logo.png';
+game.preload(IMG);
+game.onload = function () {
+    var scene = new ScrollableScene(), sprite, i;
+    for (i = 0; i < 3; ++i) {
+        sprite = new Sprite(300, 300);
+        sprite.image = game.assets[IMG];
+	sprite.y = i * 300;
+        scene.addChild(sprite);
+    }
+    
+	var menu = new MenuWindow(100, 100);
+	menu.addChildTo(scene);
+	menu.dig.x = 50;
+	menu.dig.y = 100;
+    game.pushScene(scene);
+};
+game.start();
+}
+</script>
+
+</head>
+
+<body>
+
+</body>
+
+</html>
