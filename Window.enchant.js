@@ -56,6 +56,11 @@ var MenuWindow = enchant.Class.create(LayerWindow, {
         sf.context.fillStyle = 'rgb(35, 50, 120)';
         sf.context.fillRect(1, 1, width-2, height-2);
         this.bg.image = sf;
+		
+		var WIN_WIDTH = enchant.Core.instance.width;
+        var WIN_HEIGHT = enchant.Core.instance.height;
+		this.bg.x = ((WIN_WIDTH - width)/2);
+		this.bg.y = ((WIN_HEIGHT - height)/2);
         
         //if want to use 9path for Sprite[bg], load widget.enchant.js and use this code.
         //var np = new enchant.widget.Ninepatch(width, height);
@@ -63,31 +68,9 @@ var MenuWindow = enchant.Class.create(LayerWindow, {
         //bg.image = np;
         this.dig.addChild(this.bg);
 
-        //bgタッチイベントからダイアログ全体に処理を呼ぶための関連
-        this.bg._dig = this.dig;
         
-        this.bg.addEventListener('touchstart', function(){
-            this._dig._isTouch = true;
-        });
-        this.bg.addEventListener('touchend', function(){
-            this._dig._isTouch = false;
-        });
-
-        //ウインドウタッチ移動処理
-        this.dig.addEventListener('touchstart', function(e){
-            this._touchX = e.x - this.x;
-            this._touchY = e.y - this.y;
-        });
-        this.dig.addEventListener('touchmove', function(e){
-            if(this._isTouch === true){
-                this.x += (e.x - this._touchX - this.x)/2;
-                this.y += (e.y - this._touchY - this.y)/2;
-            };
-        });
-        this.dig.addEventListener('touchend', function(e){
-            this._touchX = 0;
-            this._touchY = 0;
-        });
+		
+        
     },
 
     //width opening effect.
@@ -95,12 +78,6 @@ var MenuWindow = enchant.Class.create(LayerWindow, {
         target.addChild(this);
         target.addChild(this.dig);
 
-        this.dig.scaleX = 1;
-        this.dig.scaleY = 1/100;
-
-        this.dig.tl
-            .scaleTo(1, 1, 5, enchant.Easing.QUINT_EASEINOUT)
-            .and().moveBy(0, -85 , 5, enchant.Easing.QUINT_EASEINOUT);
     },
     //with closing effect.
     removeChildFrom: function(target){
